@@ -32,9 +32,11 @@ ordenaInsere (x:xs) = insere x (ordenaInsere xs)
 -- que também deve estar em ordem crescente.
 
 uneOrdenado :: [Int] -> [Int] -> [Int]
-uneOrdenado [] _ = []
-uneOrdenado _ [] = []
-uneOrdenado (x:xs) (y:ys) = if x < y then uneOrdenado 
+uneOrdenado [] [] = []
+uneOrdenado [] ys = ys
+uneOrdenado xs [] = xs
+uneOrdenado (x:xs) (y:ys) = if x < y then x : (uneOrdenado xs (y:ys)) else y : (uneOrdenado (x:xs) ys)
+-- perguntar para o professor se a gente deve recusar listas desordenadas, se precisar, a gente chama o ordena insere
 
 
 -- 4) Através da função uneOrdenado, defina uma função ordenaUne :: [Int] -> [Int]
@@ -42,8 +44,23 @@ uneOrdenado (x:xs) (y:ys) = if x < y then uneOrdenado
 -- para então ordenar as partições através do método uneOrdenado até atingir uma lista ordenada.
 -- Considere uma lista vazia e a uma lista com um elemento como ordenadas na sua definição.
 
---ordenaUne :: [Int] -> [Int]
+ordenaUne :: [Int] -> [Int]
+ordenaUne [] = []
+ordenaUne xs = if length xs == 1 then xs else uneOrdenado (ordenaUne metadeInf) (ordenaUne metadeSup)
+                                                        where metadeInf = [x | x <- xs,  ]
+                                                              metadeSup = [x | x <- xs,  ]
 
+-- ordenaUne [3,2,1,5,4]
+-- 
 
+--uneOrdenado [1]   [2] = [1,2] [3,4] -> [3] [4]
+
+-- 5) Explique a função padrão zipWith cuja definição é a seguinte:
+-- zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+-- zipWith f (x:xs) (y:ys)=f x y : zipWith f xs ys
+-- zipWith f _      _      = []
+
+-- RESPOSTA: usando a função zipWith pode-se gerenciar ou compactar os argumentos passados 
+-- em um único array, incluindo operações de adição, subtração, etc. Esta função permite 
 
 
