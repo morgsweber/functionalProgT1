@@ -35,7 +35,11 @@ uneOrdenado :: [Int] -> [Int] -> [Int]
 uneOrdenado [] [] = []
 uneOrdenado [] ys = ys
 uneOrdenado xs [] = xs
-uneOrdenado (x:xs) (y:ys) = if x < y then x : (uneOrdenado xs (y:ys)) else y : (uneOrdenado (x:xs) ys)
+uneOrdenado (x:xs) (y:ys) | x < y     = x : (uneOrdenado xs (y:ys))
+                          | otherwise = y : (uneOrdenado (x:xs) ys)
+
+--uneOrdenado (x:xs) (y:ys) = if x < y then x : (uneOrdenado xs (y:ys)) else y : (uneOrdenado (x:xs) ys)
+
 -- perguntar para o professor se a gente deve recusar listas desordenadas, se precisar, a gente chama o ordena insere
 
 
@@ -46,14 +50,20 @@ uneOrdenado (x:xs) (y:ys) = if x < y then x : (uneOrdenado xs (y:ys)) else y : (
 
 ordenaUne :: [Int] -> [Int]
 ordenaUne [] = []
-ordenaUne xs = if length xs == 1 then xs else uneOrdenado (ordenaUne metadeInf) (ordenaUne metadeSup)
-                                                        where metadeInf = [x | x <- xs,  ]
-                                                              metadeSup = [x | x <- xs,  ]
+ordenaUne xs | length xs == 1 = xs
+             | otherwise      = uneOrdenado (ordenaUne metadeInf) (ordenaUne metadeSup)
+                              where metadeInf = map ((!!) xs) [0.. ((length(xs) `div` 2)-1)]
+                                    metadeSup = map ((!!) xs) [length(xs) `div` 2 .. length(xs)-1]
 
--- ordenaUne [3,2,1,5,4]
--- 
+-- [3,2,1,5,4]
+-- uneOrdenado ( ordenaUne [3,2,1] ) (ordenaUne [5,4]) 
+-- uneOrdenado ( uneOrdenado ( ordenaUne [3,2] ) [1] ) (ordenaUne ( uneOrdenado [5] ) (uneOrdenado [4]) ) 
+-- uneOrdenado ( uneOrdenado ( uneOrdenado (ordenaUne [3] ordenaUne[2]) ) [1] ) (ordenaUne [5][4] ) 
+-- uneOrdenado ( uneOrdenado ( uneOrdenado [3][2] ) [1] ) [4,5] 
+-- uneOrdenado ( uneOrdenado [2,3]  [1] ) [4,5] 
+-- uneOrdenado [1,2,3]  [4,5] 
+-- uneOrdenado [1,2,3,4,5]
 
---uneOrdenado [1]   [2] = [1,2] [3,4] -> [3] [4]
 
 -- 5) Explique a função padrão zipWith cuja definição é a seguinte:
 -- zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -61,6 +71,21 @@ ordenaUne xs = if length xs == 1 then xs else uneOrdenado (ordenaUne metadeInf) 
 -- zipWith f _      _      = []
 
 -- RESPOSTA: usando a função zipWith pode-se gerenciar ou compactar os argumentos passados 
--- em um único array, incluindo operações de adição, subtração, etc. Esta função permite 
+-- em um único array, incluindo operações de adição, subtração, multiplicação, etc. 
+-- Esta função permite que passemos dois valores, seguidos de uma operação, que irá 
+-- compactar os valores dos argumentos, retornando um único resultado concatenado sobre os 
+-- dois valores passados. 
+
+
+-- 6) A função cresc determina se uma lista está em ordem crescente:
+-- cresc :: (Ord a) => [a] -> Bool
+-- cresc []       = True
+-- cresc [x]      = True
+-- cresc (x:y:xs) = (x <= y) && cresc (y:xs)
+-- Dê uma definição equivalente da função cresc usando a função zipWith.
+
+-- zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+-- zipWith f (x:xs) (y:ys)=f x y : zipWith f xs ys
+-- zipWith f _      _      = []
 
 
