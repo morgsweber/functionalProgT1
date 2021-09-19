@@ -75,17 +75,26 @@ ordenaUne xs | length xs == 1 = xs
 -- Esta função permite que passemos dois valores, seguidos de uma operação, que irá 
 -- compactar os valores dos argumentos, retornando um único resultado concatenado sobre os 
 -- dois valores passados. 
+-- Exemplo:
+-- zipWith (+) [1,2,3] [3,2,1]
+-- [1+3, 2+2, 3+1]
+-- [4,4,4]
 
 
 -- 6) A função cresc determina se uma lista está em ordem crescente:
--- cresc :: (Ord a) => [a] -> Bool
--- cresc []       = True
--- cresc [x]      = True
--- cresc (x:y:xs) = (x <= y) && cresc (y:xs)
+cresc :: (Ord a) => [a] -> Bool
+cresc []       = True
+cresc [x]      = True
+cresc (x:y:xs) = (x <= y) && cresc (y:xs)
 -- Dê uma definição equivalente da função cresc usando a função zipWith.
+
+cresc' :: (Ord a) => [a] -> Bool
+cresc' xs
+
 
 -- zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
 -- zipWith f (x:xs) (y:ys)=f x y : zipWith f xs ys
 -- zipWith f _      _      = []
 
+-- 7
 
