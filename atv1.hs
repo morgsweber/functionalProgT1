@@ -68,11 +68,8 @@ ordenaUne xs | length xs == 1 = xs
 -- zipWith f (x:xs) (y:ys)=f x y : zipWith f xs ys
 -- zipWith f _      _      = []
 
--- RESPOSTA: usando a função zipWith pode-se gerenciar ou compactar os argumentos passados 
--- em um único array, incluindo operações de adição, subtração, multiplicação, etc. 
--- Esta função permite que passemos dois valores, seguidos de uma operação, que irá 
--- compactar os valores dos argumentos, retornando um único resultado concatenado sobre os 
--- dois valores passados. 
+-- RESPOSTA: a função zipWith recebe três argumentos, uma função, e duas listas. A função recebida por parâmetro
+-- é aplicada sobre as listas de forma que o resultado seja 'compactado' e o retorno seja apenas uma lista. 
 -- Exemplo:
 -- zipWith (+) [1,2,3] [3,2,1]
 -- [1+3, 2+2, 3+1]
@@ -80,10 +77,10 @@ ordenaUne xs | length xs == 1 = xs
 
 
 -- 6) A função cresc determina se uma lista está em ordem crescente:
-cresc :: (Ord a) => [a] -> Bool
-cresc []       = True
-cresc [x]      = True
-cresc (x:y:xs) = (x <= y) && cresc (y:xs)
+-- cresc :: (Ord a) => [a] -> Bool
+-- cresc []       = True
+-- cresc [x]      = True
+-- cresc (x:y:xs) = (x <= y) && cresc (y:xs)
 -- Dê uma definição equivalente da função cresc usando a função zipWith.
 
 cresc' :: (Ord a) => [a] -> Bool
@@ -91,6 +88,9 @@ cresc' [] = True
 cresc' xs = and (zipWith (<=) xs (tail xs))
 
 -- 7)Dê uma definição para a função
+-- disjuntas :: (Ord a) => [a] -> [a] -> Bool
+-- que recebe duas listas em ordem crescente e determina se as mesmas 
+-- não possuem nenhum elemento em comum, isto é, se são disjuntas.
 
 disjuntas :: (Ord a) => [a] -> [a] -> Bool
 disjuntas [] ys = True
@@ -99,5 +99,4 @@ disjuntas (x:xs) (y:ys) | x > y = disjuntas (x:xs) ys
                         | x < y = disjuntas xs (y:ys)
                         | otherwise = False
 
---que recebe duas listas em ordem crescente e determina se as mesmas 
---não possuem nenhum elemento em comum, isto é, se são disjuntas.
+
