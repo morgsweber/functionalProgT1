@@ -40,8 +40,6 @@ uneOrdenado (x:xs) (y:ys) | x < y     = x : (uneOrdenado xs (y:ys))
 
 --uneOrdenado (x:xs) (y:ys) = if x < y then x : (uneOrdenado xs (y:ys)) else y : (uneOrdenado (x:xs) ys)
 
--- perguntar para o professor se a gente deve recusar listas desordenadas, se precisar, a gente chama o ordena insere
-
 
 -- 4) Através da função uneOrdenado, defina uma função ordenaUne :: [Int] -> [Int]
 -- que particiona sucessivamente uma lista na metade até atingir partições de tamanho 1
@@ -89,12 +87,17 @@ cresc (x:y:xs) = (x <= y) && cresc (y:xs)
 -- Dê uma definição equivalente da função cresc usando a função zipWith.
 
 cresc' :: (Ord a) => [a] -> Bool
-cresc' xs
+cresc' [] = True
+cresc' xs = and (zipWith (<=) xs (tail xs))
 
+-- 7)Dê uma definição para a função
 
--- zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
--- zipWith f (x:xs) (y:ys)=f x y : zipWith f xs ys
--- zipWith f _      _      = []
+disjuntas :: (Ord a) => [a] -> [a] -> Bool
+disjuntas [] ys = True
+disjuntas xs [] = True
+disjuntas (x:xs) (y:ys) | x > y = disjuntas (x:xs) ys
+                        | x < y = disjuntas xs (y:ys)
+                        | otherwise = False
 
--- 7
-
+--que recebe duas listas em ordem crescente e determina se as mesmas 
+--não possuem nenhum elemento em comum, isto é, se são disjuntas.
