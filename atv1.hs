@@ -9,12 +9,19 @@ insere n []                  = n : []
 insere n (x:xs) | n <= x     = n : x : xs
                 | otherwise  = x : (insere n xs)
 
+-- Exemplo de passo a passo:
 -- insere 3 [1,2,4,5]
 -- []
 -- (3 <= 1) [1] 
 -- (3 <= 2) [1,2]
 -- (3 <= 3) [1,2,3] ++ [4,5,6]
 -- (3 <= 4) [1,2,3,4,5,6]
+
+-- Descrição:
+-- Essa função insere um inteiro considerando a ordem em uma lista de inteiros já ordenada
+-- A função vai verificando se o valor a ser inserido é menor ou igual a cada elemento da lista até
+-- encontrar a posição na qual o novo valor deve ficar. Fazendo uma concatenação dos elementos menos 
+-- ou iguais ao valor inserido com o valor inserido e o restante da lista.
 
 
 -- 2) Usando a função insere, defina a função ordenaInsere :: [Int] -> [Int] 
@@ -26,6 +33,9 @@ ordenaInsere :: [Int] -> [Int]
 ordenaInsere []     = []
 ordenaInsere (x:xs) = insere x (ordenaInsere xs)
 
+-- Descrição:
+-- Ordena uma lista de inteiros em ordem crescente usando o algoritmo de 
+-- ordenação por inserção, assim a função vai inserindo cada elemento da lista
 
 -- 3) Defina uma função recursiva uneOrdenado :: [Int] -> [Int] -> [Int] 
 -- que une duas listas já ordenadas em ordem crescente uma terceira lista 
@@ -40,6 +50,13 @@ uneOrdenado (x:xs) (y:ys) | x < y     = x : (uneOrdenado xs (y:ys))
 
 --uneOrdenado (x:xs) (y:ys) = if x < y then x : (uneOrdenado xs (y:ys)) else y : (uneOrdenado (x:xs) ys)
 
+-- Descrição:
+-- O uneOrdenado vai comparando cada elemento das duas listas, x e y, que recebe
+-- e caso x seja maior que y então passa x concatenado com o método uneOrdenado (recurssão) passando 
+-- como parametro o restante da lista de x e o elemento y com o restante de sua lista.
+-- caso contrario, y será concatenado com a recurssão que receberá como parametro
+-- x com a lista de x e o restante da lista de y.
+-- Isso ocorre para que nenhum elemento seja perdido durante a união ordenada.
 
 -- 4) Através da função uneOrdenado, defina uma função ordenaUne :: [Int] -> [Int]
 -- que particiona sucessivamente uma lista na metade até atingir partições de tamanho 1
